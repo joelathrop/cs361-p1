@@ -77,12 +77,12 @@ public class DFA implements DFAInterface {
 
     @Override
     public boolean isFinal(String name) {
-        return false;
+        return finalStates.contains(name);
     }
 
     @Override
     public boolean isStart(String name) {
-        return false;
+        return startStates.contains(name);
     }
 
     @Override
