@@ -7,16 +7,33 @@ import java.util.Set;
 
 public class DFA implements DFAInterface {
     /* 5-tuple instance variables */
-    public Set sigma;
+    public LinkedHashSet<String> sigma;
 
-    public Set states; // will be a LinkedHashSet
-    public Set finalStates;
-    public Set startStates;
+    public LinkedHashSet<String> states;
+    public LinkedHashSet<String> finalStates;
+    public LinkedHashSet<String> startStates;
+
+    // transition function?
+
+    /**
+     * Constructor for Deterministic Finite Automata (DFA)
+     * Instantiates 5-tuple sets
+     */
+    public DFA() {
+        sigma = new LinkedHashSet<String>();
+        states = new LinkedHashSet<String>();
+        finalStates = new LinkedHashSet<String>();
+        startStates = new LinkedHashSet<String>();
+    }
     @Override
     public boolean addState(String name) {
         // search set for state name
-
-        return false;
+        if (states.contains(name)) {
+            return false;
+        } else {
+            states.add(name);
+            return true;
+        }
     }
 
     @Override
