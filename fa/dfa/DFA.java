@@ -2,11 +2,20 @@ package fa.dfa;
 
 import fa.State;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class DFA implements DFAInterface {
+    /* 5-tuple instance variables */
+    public Set sigma;
+
+    public Set states; // will be a LinkedHashSet
+    public Set finalStates;
+    public Set startStates;
     @Override
     public boolean addState(String name) {
+        // search set for state name
+
         return false;
     }
 
