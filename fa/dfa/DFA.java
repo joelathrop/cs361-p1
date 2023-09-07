@@ -87,7 +87,11 @@ public class DFA implements DFAInterface {
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
-        return false;
+        if (states.contains(fromState) && states.contains(toState) && sigma.contains(onSymb)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
