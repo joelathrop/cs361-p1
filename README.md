@@ -1,8 +1,8 @@
-# Project #: Project Name
+# Project 1: Modeling Deterministic Finite Automata
 
-* Author: Your Name
-* Class: CS121 Section #
-* Semester: Fall 2022
+* Author: Joe Lathrop, Clara Arnold
+* Class: CS361
+* Semester: Fall 2023
 
 ## Overview
 
