@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class DFA implements DFAInterface {
     /* 5-tuple instance variables */
-    public LinkedHashSet<String> sigma;
+    public LinkedHashSet<Character> sigma;
 
     public LinkedHashSet<String> states;
     public LinkedHashSet<String> finalStates;
@@ -20,14 +20,13 @@ public class DFA implements DFAInterface {
      * Instantiates 5-tuple sets
      */
     public DFA() {
-        sigma = new LinkedHashSet<String>();
+        sigma = new LinkedHashSet<Character>();
         states = new LinkedHashSet<String>();
         finalStates = new LinkedHashSet<String>();
         startStates = new LinkedHashSet<String>();
     }
     @Override
     public boolean addState(String name) {
-        // search set for state name
         if (states.contains(name)) {
             return false;
         } else {
@@ -38,17 +37,27 @@ public class DFA implements DFAInterface {
 
     @Override
     public boolean setFinal(String name) {
-        return false;
+        if (states.contains(name)) {
+            finalStates.add(name);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public boolean setStart(String name) {
-        return false;
+        if (states.contains(name)) {
+            startStates.add(name);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void addSigma(char symbol) {
-
+        sigma.add(symbol);
     }
 
     @Override
