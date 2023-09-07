@@ -67,12 +67,15 @@ public class DFA implements DFAInterface {
 
     @Override
     public Set<Character> getSigma() {
-        return null;
+        return sigma;
     }
 
     @Override
     public State getState(String name) {
-        return null;
+        if (!states.contains(name)) {
+            return null;
+        }
+        return new DFAState(name);
     }
 
     @Override

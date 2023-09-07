@@ -8,10 +8,13 @@ public abstract class State {
 	 * @author elenasherman
 	 */
 	private String name;
-	
-	public State() {
-		
-	}
+
+//	/**
+//	 * Constructor for State
+//	 */
+//	public State() {
+//		name = "";
+//	}
 	
 	/**
 	 * All concrete consturctors must
