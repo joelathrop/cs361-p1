@@ -12,6 +12,7 @@ public class DFA implements DFAInterface {
     public LinkedHashSet<String> states;
     public LinkedHashSet<String> finalStates;
     public LinkedHashSet<String> startStates;
+    public String currentState;
 
     // transition function?
 
@@ -20,6 +21,7 @@ public class DFA implements DFAInterface {
      * Instantiates 5-tuple sets
      */
     public DFA() {
+        currentState = "";
         sigma = new LinkedHashSet<Character>();
         states = new LinkedHashSet<String>();
         finalStates = new LinkedHashSet<String>();
@@ -49,6 +51,7 @@ public class DFA implements DFAInterface {
     public boolean setStart(String name) {
         if (states.contains(name)) {
             startStates.add(name);
+            currentState = name;
             return true;
         } else {
             return false;
@@ -62,7 +65,18 @@ public class DFA implements DFAInterface {
 
     @Override
     public boolean accepts(String s) {
-        return false;
+        boolean retVal = false;
+        // loop thru string
+        for (int i = 0; i < s.length(); i++) {
+            // check if in alphabet
+            if (!sigma.contains(s.charAt(i))) {
+                retVal = false;
+            }
+            // transition to state
+
+            retVal = true;
+        }
+        return retVal;
     }
 
     @Override
@@ -87,6 +101,10 @@ public class DFA implements DFAInterface {
     public boolean isStart(String name) {
         return startStates.contains(name);
     }
+
+//    public String transition(char s) {
+//
+//    }
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {

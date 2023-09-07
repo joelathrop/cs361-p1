@@ -21,4 +21,7 @@ public class DFAState extends State {
         transitionTable = new LinkedHashMap<>();
     }
 
+    public void transition(int k, State v) {
+
+    }
 }
