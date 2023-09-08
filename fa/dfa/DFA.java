@@ -13,10 +13,10 @@ public class DFA implements DFAInterface {
 
     public LinkedHashSet<String> states;
     public LinkedHashSet<String> finalStates;
-    public LinkedHashSet<String> startStates;
+    public String startState;
     public LinkedHashSet<DFAState> transitions;
     public String currentState;
-    public Iterator<String> it;
+    public Iterator<DFAState> it;
 
     // transition function?
 
@@ -26,12 +26,11 @@ public class DFA implements DFAInterface {
      */
     public DFA() {
         currentState = "";
+        startState = "";
         sigma = new LinkedHashSet<Character>();
         states = new LinkedHashSet<String>();
         finalStates = new LinkedHashSet<String>();
-        startStates = new LinkedHashSet<String>();
-
-        it = states.iterator();
+        transitions = new LinkedHashSet<DFAState>();
     }
     @Override
     public boolean addState(String name) {
@@ -57,12 +56,16 @@ public class DFA implements DFAInterface {
     @Override
     public boolean setStart(String name) {
         if (states.contains(name)) {
-            startStates.add(name);
+            startState = name;
             currentState = name;
             return true;
         } else {
             return false;
         }
+    }
+
+    private String getStart() {
+        return startState;
     }
 
     @Override
@@ -77,7 +80,7 @@ public class DFA implements DFAInterface {
         for (int i = 0; i < s.length(); i++) {
             // check if in alphabet
             if (!sigma.contains(s.charAt(i))) {
-                retVal = false;
+                return false;
             }
             // transition to state
 
@@ -106,19 +109,18 @@ public class DFA implements DFAInterface {
 
     @Override
     public boolean isStart(String name) {
-        return startStates.contains(name);
+        return startState.equals(name);
     }
-
-//    public String transition(char s) {
-//
-//    }
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
+        String start = getStart();
+        it = transitions.iterator();
         if (states.contains(fromState) && states.contains(toState) && sigma.contains(onSymb)) {
             while (it.hasNext()) {
-                if (it.next().equals(toState)) {
-
+                DFAState state = it.next();
+                if (state.toString().equals(fromState)) {
+                    state.addTransition(onSymb, toState);
                 }
             }
             return true;

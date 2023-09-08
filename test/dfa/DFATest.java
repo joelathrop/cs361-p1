@@ -9,6 +9,8 @@ import org.junit.Test;
 import fa.dfa.DFA;
 
 public class DFATest {
+
+	// TODO: Test with characters
 	
 	
 	//------------------- dfa1 tests ----------------------//
