@@ -167,20 +167,49 @@ public class DFA implements DFAInterface {
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
         boolean retVal = false;
-//        String start = getStart();
-        it = transitions.iterator();
+        boolean done = false;
+        boolean dneFlagFromState = true;
+        boolean dneFlagToState = true;
+        DFAState from = new DFAState(fromState);
+        DFAState to = new DFAState(toState);
+
+        // need to add current state to transitionTable???
+
+        // fromState check exist
         for (DFAState s : states) {
-            if (s.toString().equals(fromState) && s.toString().equals(toState) && sigma.contains(onSymb)) {
-                while (it.hasNext()) {
-                    DFAState state = it.next();
-                    if (state.toString().equals(fromState)) {
+            if (s.toString().equals(fromState)) {
+                dneFlagFromState = false;
+            }
+        }
+        // return if fromState does not exist
+        if (dneFlagFromState) {
+            return false;
+        }
+        // toState check exist
+        for (DFAState s : states) {
+            if (s.toString().equals(toState)) {
+                dneFlagToState = false;
+            }
+        }
+        // return if toState does not exist
+        if (dneFlagToState) {
+            return false;
+        }
+
+        // alphabet check exist
+        if (sigma.contains(onSymb)) {
+            while(!done) {
+                for (DFAState s : states) {
+                    if (s.toString().equals(fromState)) {
                         DFAState add = new DFAState(toState);
-                        state.addTransition(onSymb, add);
+                        s.addTransition(onSymb, add);
+                        retVal = true;
+                        break;
+                    } else {
+                        retVal = false;
                     }
                 }
-                retVal = true;
-            } else {
-                retVal = false;
+                done = true;
             }
         }
         return retVal;
