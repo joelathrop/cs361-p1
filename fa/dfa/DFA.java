@@ -2,6 +2,8 @@ package fa.dfa;
 
 import fa.State;
 
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -12,7 +14,9 @@ public class DFA implements DFAInterface {
     public LinkedHashSet<String> states;
     public LinkedHashSet<String> finalStates;
     public LinkedHashSet<String> startStates;
+    public LinkedHashSet<DFAState> transitions;
     public String currentState;
+    public Iterator<String> it;
 
     // transition function?
 
@@ -26,6 +30,8 @@ public class DFA implements DFAInterface {
         states = new LinkedHashSet<String>();
         finalStates = new LinkedHashSet<String>();
         startStates = new LinkedHashSet<String>();
+
+        it = states.iterator();
     }
     @Override
     public boolean addState(String name) {
@@ -33,6 +39,7 @@ public class DFA implements DFAInterface {
             return false;
         } else {
             states.add(name);
+            transitions.add(new DFAState(name));
             return true;
         }
     }
@@ -109,6 +116,11 @@ public class DFA implements DFAInterface {
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
         if (states.contains(fromState) && states.contains(toState) && sigma.contains(onSymb)) {
+            while (it.hasNext()) {
+                if (it.next().equals(toState)) {
+
+                }
+            }
             return true;
         } else {
             return false;

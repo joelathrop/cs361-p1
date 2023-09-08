@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 public class DFAState extends State {
 
     /* 5-tuple instance variables */
-    LinkedHashMap<Integer, State> transitionTable;
+    public LinkedHashMap<Integer, String> transitionTable;
 
     /**
      * All concrete consturctors must
@@ -19,9 +19,10 @@ public class DFAState extends State {
     public DFAState(String name) {
         super(name);
         transitionTable = new LinkedHashMap<>();
+//        transitionTable.put(key, name);
     }
 
-    public void transition(int k, State v) {
+    public void addTransition(int k, String v) {
 
     }
 }
