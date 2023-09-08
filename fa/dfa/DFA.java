@@ -35,14 +35,19 @@ public class DFA implements DFAInterface {
     @Override
     public boolean addState(String name) {
         boolean retVal = false;
-        for (DFAState s : states) {
-            if (s.toString().equals(name)) {
-                return false;
-            } else {
-                DFAState newState = new DFAState(name);
-                states.add(newState);
-                transitions.add(new DFAState(name));
-                retVal = true;
+        DFAState newState = new DFAState(name);
+        if (states.isEmpty()) {
+            states.add(newState);
+            retVal = true;
+        } else {
+            for (DFAState s : states) {
+                if (s.toString().equals(name)) {
+                    return false;
+                } else {
+                    states.add(newState);
+                    transitions.add(new DFAState(name));
+                    retVal = true;
+                }
             }
         }
         return retVal;
@@ -51,13 +56,24 @@ public class DFA implements DFAInterface {
     @Override
     public boolean setFinal(String name) {
         boolean retVal = false;
-        for (DFAState s : states) {
-            if (s.toString().equals(name)) {
-                DFAState newState = new DFAState(name);
-                finalStates.add(newState);
-                retVal = true;
-            } else {
-                return false;
+        boolean done = false;
+        DFAState newState = new DFAState(name);
+
+        if (states.isEmpty()) {
+//            finalStates.add(newState);
+            return retVal;
+        } else {
+            while (!done) {
+                for (DFAState s : states) {
+                    if (s.toString().equals(name)) {
+                        finalStates.add(newState);
+                        retVal = true;
+                        done = true;
+                    } else {
+                        retVal = false;
+                    }
+                }
+                done = true;
             }
         }
         return retVal;
@@ -66,13 +82,22 @@ public class DFA implements DFAInterface {
     @Override
     public boolean setStart(String name) {
         boolean retVal = false;
-        for (DFAState s : states) {
-            if (s.toString().equals(name)) {
-                startState = name;
-//                currentState = name;
-                retVal = true;
-            } else {
-                return false;
+        boolean done = false;
+
+        if (states.isEmpty()) {
+            return retVal;
+        } else {
+            while (!done) {
+                for (DFAState s : states) {
+                    if (s.toString().equals(name)) {
+                        startState = name;
+                        retVal = true;
+                        done = true;
+                    } else {
+                        retVal = false;
+                    }
+                }
+                done = true;
             }
         }
         return retVal;
@@ -99,9 +124,14 @@ public class DFA implements DFAInterface {
                 return false;
             }
             // transition to state
-            current.transitionTable.get();
-//            current =
-            retVal = true;
+            current = current.transitionTable.get(s.charAt(i));
+        }
+
+        for (DFAState state : finalStates) {
+            if (state.equals(current)) {
+                retVal = true;
+                break;
+            }
         }
         return retVal;
     }
@@ -138,7 +168,7 @@ public class DFA implements DFAInterface {
                 DFAState state = it.next();
                 if (state.toString().equals(fromState)) {
                     DFAState add = new DFAState(toState);
-                    state.addTransition(add, onSymb);
+                    state.addTransition(onSymb, add);
                 }
             }
             return true;

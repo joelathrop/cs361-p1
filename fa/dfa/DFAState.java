@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 public class DFAState extends State {
 
     /* 5-tuple instance variables */
-    public LinkedHashMap<DFAState, Character> transitionTable;
+    public LinkedHashMap<Character, DFAState> transitionTable;
 
     /**
      * All concrete consturctors must
@@ -26,12 +26,12 @@ public class DFAState extends State {
      * addTransition in DFAState adds a transition to a Map, which imitates
      * a transition table
      *
-     * @param state - where it's going
      * @param value - how it's getting there
+     * @param state - where it's going
      */
-    public void addTransition(DFAState state, char value) {
+    public void addTransition(char value, DFAState state) {
         // map values hold where it's going and how it's getting there,
         // ex: going to B on '0'
-        transitionTable.put(state, value);
+        transitionTable.put(value, state);
     }
 }
