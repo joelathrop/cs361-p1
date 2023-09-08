@@ -2,7 +2,6 @@ package fa.dfa;
 
 import fa.State;
 
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -27,10 +26,10 @@ public class DFA implements DFAInterface {
     public DFA() {
 //        currentState = "";
         startState = "";
-        sigma = new LinkedHashSet<Character>();
-        states = new LinkedHashSet<DFAState>();
-        finalStates = new LinkedHashSet<DFAState>();
-        transitions = new LinkedHashSet<DFAState>();
+        sigma = new LinkedHashSet<>();
+        states = new LinkedHashSet<>();
+        finalStates = new LinkedHashSet<>();
+        transitions = new LinkedHashSet<>();
     }
     @Override
     public boolean addState(String name) {
@@ -68,7 +67,7 @@ public class DFA implements DFAInterface {
                     if (s.toString().equals(name)) {
                         finalStates.add(newState);
                         retVal = true;
-                        done = true;
+                        break;
                     } else {
                         retVal = false;
                     }
@@ -92,7 +91,8 @@ public class DFA implements DFAInterface {
                     if (s.toString().equals(name)) {
                         startState = name;
                         retVal = true;
-                        done = true;
+//                        done = true;
+                        break;
                     } else {
                         retVal = false;
                     }
@@ -103,9 +103,9 @@ public class DFA implements DFAInterface {
         return retVal;
     }
 
-    private String getStart() {
-        return startState;
-    }
+//    private String getStart() {
+//        return startState;
+//    }
 
     @Override
     public void addSigma(char symbol) {
@@ -143,15 +143,20 @@ public class DFA implements DFAInterface {
 
     @Override
     public State getState(String name) {
-        if (!states.contains(name)) {
-            return null;
+        for (DFAState s : states) {
+            if (s.toString().equals(name)) {
+                return s;
+            }
         }
-        return new DFAState(name);
+        return null;
     }
 
     @Override
     public boolean isFinal(String name) {
-        return finalStates.contains(name);
+        for (DFAState s : finalStates) {
+            return s.toString().equals(name);
+        }
+        return false;
     }
 
     @Override
@@ -161,24 +166,31 @@ public class DFA implements DFAInterface {
 
     @Override
     public boolean addTransition(String fromState, String toState, char onSymb) {
-        String start = getStart();
+        boolean retVal = false;
+//        String start = getStart();
         it = transitions.iterator();
-        if (states.contains(fromState) && states.contains(toState) && sigma.contains(onSymb)) {
-            while (it.hasNext()) {
-                DFAState state = it.next();
-                if (state.toString().equals(fromState)) {
-                    DFAState add = new DFAState(toState);
-                    state.addTransition(onSymb, add);
+        for (DFAState s : states) {
+            if (s.toString().equals(fromState) && s.toString().equals(toState) && sigma.contains(onSymb)) {
+                while (it.hasNext()) {
+                    DFAState state = it.next();
+                    if (state.toString().equals(fromState)) {
+                        DFAState add = new DFAState(toState);
+                        state.addTransition(onSymb, add);
+                    }
                 }
+                retVal = true;
+            } else {
+                retVal = false;
             }
-            return true;
-        } else {
-            return false;
         }
+        return retVal;
     }
 
+    /* TODO */
     @Override
     public DFA swap(char symb1, char symb2) {
         return null;
     }
+
+    //TODO: toString()
 }
