@@ -174,6 +174,7 @@ public class DFA implements DFAInterface {
         DFAState to = new DFAState(toState);
 
         // need to add current state to transitionTable???
+        DFAState start = new DFAState(startState);
 
         // fromState check exist
         for (DFAState s : states) {
