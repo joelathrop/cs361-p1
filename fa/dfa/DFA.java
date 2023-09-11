@@ -3,6 +3,7 @@ package fa.dfa;
 import fa.State;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -14,10 +15,12 @@ public class DFA implements DFAInterface {
     public LinkedHashSet<DFAState> finalStates;
     public LinkedHashSet<DFAState> transitions;
     public String startState;
-//    public String currentState;
+    public String totalStates = "";
+    public String alphabet = "";
     public Iterator<DFAState> it;
 
-    // transition function?
+    // transition table
+    public LinkedHashMap<Character, DFAState> transitionTable;
 
     /**
      * Constructor for Deterministic Finite Automata (DFA)
@@ -30,6 +33,7 @@ public class DFA implements DFAInterface {
         states = new LinkedHashSet<>();
         finalStates = new LinkedHashSet<>();
         transitions = new LinkedHashSet<>();
+        transitionTable = new LinkedHashMap<>();
     }
     @Override
     public boolean addState(String name) {
@@ -37,6 +41,7 @@ public class DFA implements DFAInterface {
         DFAState newState = new DFAState(name);
         if (states.isEmpty()) {
             states.add(newState);
+            totalStates += name + " ";
             retVal = true;
         } else {
             for (DFAState s : states) {
@@ -45,6 +50,7 @@ public class DFA implements DFAInterface {
                 } else {
                     states.add(newState);
                     transitions.add(new DFAState(name));
+                    totalStates += name + " ";
                     retVal = true;
                 }
             }
@@ -109,6 +115,7 @@ public class DFA implements DFAInterface {
 
     @Override
     public void addSigma(char symbol) {
+        alphabet += symbol + " ";
         sigma.add(symbol);
     }
 
@@ -204,6 +211,7 @@ public class DFA implements DFAInterface {
                     if (s.toString().equals(fromState)) {
                         DFAState add = new DFAState(toState);
                         s.addTransition(onSymb, add);
+                        transitionTable.put(onSymb, add);
                         retVal = true;
                         break;
                     } else {
@@ -223,4 +231,34 @@ public class DFA implements DFAInterface {
     }
 
     //TODO: toString()
+    @Override
+    public String toString() {
+        String ret = "";
+        // Q, Sigma : states & alphabet portion
+        ret += " Q = { " + totalStates + "}\n"
+                + "Sigma = { " + alphabet + "}\n"
+
+                // delta : transition table portion
+                + "delta =\n"
+                + "     " + alphabet + "\n";
+        ret += transitionTable.toString() + "\n";
+
+//        for (int i = 0; i < totalStates.length(); i++) {
+//            ret += totalStates.charAt(i) + " ";
+//            // go across the line with the transition states
+////            ret += transitionTable.get(alphabet) + " ";
+//            transitionTable.toString();
+//        }
+
+        // q0 : start state portion
+        ret += "q0 = " + startState + "\n";
+
+        // F : final states portion
+        String fStates = "";
+        for (DFAState f : finalStates) {
+            fStates = f.toString() + " ";
+        }
+        ret += "F = { " + fStates + "}";
+        return ret;
+    }
 }
