@@ -17,7 +17,7 @@ public class DFA implements DFAInterface {
     public String startState;
     public String totalStates = "";
     public String alphabet = "";
-    public Iterator<DFAState> it;
+//    public Iterator<DFAState> it;
 
     // transition table
     public LinkedHashMap<Character, DFAState> transitionTable;
@@ -109,10 +109,6 @@ public class DFA implements DFAInterface {
         return retVal;
     }
 
-//    private String getStart() {
-//        return startState;
-//    }
-
     @Override
     public void addSigma(char symbol) {
         alphabet += symbol + " ";
@@ -124,7 +120,7 @@ public class DFA implements DFAInterface {
         boolean retVal = false;
         DFAState current = new DFAState(startState);
 
-        // loop thru string
+        // loop through string
         for (int i = 0; i < s.length(); i++) {
             // check if in alphabet
             if (!sigma.contains(s.charAt(i))) {
@@ -214,8 +210,6 @@ public class DFA implements DFAInterface {
                         transitionTable.put(onSymb, add);
                         retVal = true;
                         break;
-                    } else {
-                        retVal = false;
                     }
                 }
                 done = true;
