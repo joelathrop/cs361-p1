@@ -1,5 +1,7 @@
 package fa;
 
+import fa.dfa.DFAState;
+
 public abstract class State {
 	/**
 	 * The state label.
@@ -31,6 +33,7 @@ public abstract class State {
 	public String toString(){
 		return name;
 	}
-	
-	
+
+
+	public abstract boolean equals(DFAState s);
 }

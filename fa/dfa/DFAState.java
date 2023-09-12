@@ -34,4 +34,16 @@ public class DFAState extends State {
         // ex: going to B on '0'
         transitionTable.put(value, state);
     }
+
+    @Override
+    public boolean equals(DFAState s) {
+        if (this == s) {
+            return true; // If it's the same object in memory, they are equal
+        }
+        if (s == null || getClass() != s.getClass()) {
+            return false; // If s is null or of a different class, they are not equal
+        }
+//        DFAState otherState = (DFAState) s;
+        return this.getName().equals(s.getName());
+    }
 }
