@@ -18,6 +18,10 @@ public class Main {
         dfa.addTransition("b", "a", '0');
         dfa.addTransition("b", "b", '1');
 
+//        dfa.accepts("0");
+        dfa.accepts("1");
+        dfa.accepts("101");
+
         System.out.println(dfa.toString());
     }
 }

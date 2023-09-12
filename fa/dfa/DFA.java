@@ -127,7 +127,10 @@ public class DFA implements DFAInterface {
                 return false;
             }
             // transition to state
-            current = current.transitionTable.get(s.charAt(i));
+            if (transitionTable.containsKey(s.charAt(i))) {
+                current = transitionTable.get(s.charAt(i));
+            }
+//            current = current.transitionTable.get(s.charAt(i));
         }
 
         for (DFAState state : finalStates) {
