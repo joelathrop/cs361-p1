@@ -20,7 +20,7 @@ public class DFA implements DFAInterface {
 //    public Iterator<DFAState> it;
 
     // transition table
-    public LinkedHashMap<Character, DFAState> transitionTable;
+    public LinkedHashMap<DFAState, LinkedHashMap<Character, DFAState>> transitionTable;
 
     /**
      * Constructor for Deterministic Finite Automata (DFA)
@@ -130,10 +130,12 @@ public class DFA implements DFAInterface {
             if (!sigma.contains(s.charAt(i))) {
                 return false;
             }
+            current = current.getNextState(current, s.charAt(i));
+
             // transition to state
-            if (transitionTable.containsKey(s.charAt(i))) {
-                current = transitionTable.get(s.charAt(i));
-            }
+//            if (transitionTable.containsKey(s.charAt(i))) {
+//                current = transitionTable.get(s.charAt(i));
+//            }
 //            current = current.transitionTable.get(s.charAt(i));
         }
 
@@ -180,7 +182,7 @@ public class DFA implements DFAInterface {
         boolean done = false;
         boolean dneFlagFromState = true;
         boolean dneFlagToState = true;
-        DFAState from = new DFAState(fromState);
+        DFAState current = new DFAState(fromState);
         DFAState to = new DFAState(toState);
 
         // fromState check exist
@@ -210,9 +212,10 @@ public class DFA implements DFAInterface {
             while(!done) {
                 for (DFAState s : states) {
                     if (s.toString().equals(fromState)) {
-                        DFAState add = new DFAState(toState);
-                        s.addTransition(onSymb, add);
-                        transitionTable.put(onSymb, add);
+                        s.addTransition(current, onSymb, to);
+                        transitionTable
+                                .computeIfAbsent(current, k -> new LinkedHashMap<>())
+                                .put(onSymb, to);
                         retVal = true;
                         break;
                     }

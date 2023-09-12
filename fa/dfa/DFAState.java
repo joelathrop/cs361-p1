@@ -40,6 +40,22 @@ public class DFAState extends State {
                 .put(value, toState);
     }
 
+    /**
+     * getNextState returns the next state based on the current state and
+     * transition value
+     *
+     * @param current - current state
+     * @param value - transition value from valid alphabet
+     * @return - DFAState following current based on transition value
+     */
+    public DFAState getNextState(DFAState current, char value) {
+        LinkedHashMap<Character, DFAState> stateTransitions = transitionTable.get(current);
+        if (stateTransitions != null) {
+            return stateTransitions.getOrDefault(value, null);
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(DFAState s) {
         if (this == s) {
