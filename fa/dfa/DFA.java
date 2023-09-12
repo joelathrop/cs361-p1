@@ -48,12 +48,15 @@ public class DFA implements DFAInterface {
                 if (s.toString().equals(name)) {
                     return false;
                 } else {
-                    states.add(newState);
+//                    states.add(newState);
                     transitions.add(new DFAState(name));
                     totalStates += name + " ";
                     retVal = true;
                 }
             }
+        }
+        if (retVal && !states.contains(newState)) {
+            states.add(newState);
         }
         return retVal;
     }
@@ -84,6 +87,7 @@ public class DFA implements DFAInterface {
         return retVal;
     }
 
+    // TODO: Reset start state on next call
     @Override
     public boolean setStart(String name) {
         boolean retVal = false;
@@ -179,9 +183,6 @@ public class DFA implements DFAInterface {
         DFAState from = new DFAState(fromState);
         DFAState to = new DFAState(toState);
 
-        // need to add current state to transitionTable???
-        DFAState start = new DFAState(startState);
-
         // fromState check exist
         for (DFAState s : states) {
             if (s.toString().equals(fromState)) {
@@ -192,6 +193,7 @@ public class DFA implements DFAInterface {
         if (dneFlagFromState) {
             return false;
         }
+
         // toState check exist
         for (DFAState s : states) {
             if (s.toString().equals(toState)) {
