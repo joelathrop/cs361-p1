@@ -17,7 +17,6 @@ public class DFA implements DFAInterface {
     public String startState;
     public String totalStates = "";
     public String alphabet = "";
-//    public Iterator<DFAState> it;
 
     // transition table
     public LinkedHashMap<DFAState, LinkedHashMap<Character, DFAState>> transitionTable;
@@ -27,7 +26,6 @@ public class DFA implements DFAInterface {
      * Instantiates 5-tuple sets
      */
     public DFA() {
-//        currentState = "";
         startState = "";
         sigma = new LinkedHashSet<>();
         states = new LinkedHashSet<>();
@@ -122,7 +120,14 @@ public class DFA implements DFAInterface {
     @Override
     public boolean accepts(String s) {
         boolean retVal = false;
-        DFAState current = new DFAState(startState);
+        DFAState current = new DFAState("");
+        for (DFAState st : states) {
+            if (isStart(st.toString())){
+                current = st;
+            } else {
+                // if it doesn't exist
+            }
+        }
 
         // loop through string
         for (int i = 0; i < s.length(); i++) {
@@ -130,13 +135,10 @@ public class DFA implements DFAInterface {
             if (!sigma.contains(s.charAt(i))) {
                 return false;
             }
-            current = current.getNextState(current, s.charAt(i));
-
-            // transition to state
-//            if (transitionTable.containsKey(s.charAt(i))) {
-//                current = transitionTable.get(s.charAt(i));
-//            }
-//            current = current.transitionTable.get(s.charAt(i));
+            // this is null once it gets to b, is that because .getNextState
+            // is not returning the right address to b? it thinks b's
+            // DFAState transition table is empty.
+            current = current.getNextState(s.charAt(i));
         }
 
         for (DFAState state : finalStates) {
@@ -212,7 +214,7 @@ public class DFA implements DFAInterface {
             while(!done) {
                 for (DFAState s : states) {
                     if (s.toString().equals(fromState)) {
-                        s.addTransition(current, onSymb, to);
+                        s.addTransition(onSymb, to);
                         transitionTable
                                 .computeIfAbsent(current, k -> new LinkedHashMap<>())
                                 .put(onSymb, to);

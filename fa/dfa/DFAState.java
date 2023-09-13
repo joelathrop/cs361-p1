@@ -3,14 +3,16 @@ package fa.dfa;
 import fa.State;
 import java.util.LinkedHashMap;
 
+/**
+ * DFAState class creates a DFAState object which has a transition table
+ * so that it can correctly map to the next state on a given transition symbol
+ * from the alphabet sigma.
+ *
+ * @author joelathrop
+ */
 public class DFAState extends State {
 
-    /* 5-tuple instance variables */
-//    public LinkedHashMap<Character, DFAState> transitionTable;
-    /* Map: state maps to a map, which maps a character to a state
-        example: State A maps to a map with keys (transitions) 0 and 1,
-        which map to State A and State B respectively. */
-    public LinkedHashMap<DFAState, LinkedHashMap<Character, DFAState>> transitionTable;
+    public LinkedHashMap<Character, DFAState> transitionTable;
 
     /**
      * All concrete consturctors must
@@ -23,37 +25,28 @@ public class DFAState extends State {
     public DFAState(String name) {
         super(name);
         transitionTable = new LinkedHashMap<>();
-//        transitionTable.put(key, name);
     }
 
     /**
      * addTransition in DFAState adds a transition to a Map.
      * transitionTable maps a state to a map of a transition and a state.
      *
-     * @param fromState - current state
      * @param toState - state transitioning to
      * @param value - how it's getting there
      */
-    public void addTransition(DFAState fromState, char value, DFAState toState) {
-        transitionTable
-                .computeIfAbsent(fromState, k -> new LinkedHashMap<>())
-                .put(value, toState);
+    public void addTransition(char value, DFAState toState) {
+        transitionTable.put(value, toState);
     }
 
     /**
-     * getNextState returns the next state based on the current state and
-     * transition value
+     * getNextState returns the next state based on the current state
+     * (which is just the DFAState object we're in) and it's transition value
      *
-     * @param current - current state
-     * @param value - transition value from valid alphabet
-     * @return - DFAState following current based on transition value
+     * @param symb - transition symbol from valid alphabet
+     * @return - following DFAState based on transition value
      */
-    public DFAState getNextState(DFAState current, char value) {
-        LinkedHashMap<Character, DFAState> stateTransitions = transitionTable.get(current);
-        if (stateTransitions != null) {
-            return stateTransitions.getOrDefault(value, null);
-        }
-        return null;
+    public DFAState getNextState(char symb) {
+        return transitionTable.get(symb);
     }
 
     @Override
