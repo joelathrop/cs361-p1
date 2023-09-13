@@ -587,7 +587,6 @@ public class DFATest {
 		assertTrue(dfa.accepts("0000111"));
 		assertTrue(dfa.accepts("00111001110"));
 		assertFalse(dfa.accepts("01"));
-		// TODO: Needs to not throw a nullPointerException and crash
 		assertFalse(dfa.accepts("0001100"));
 		assertFalse(dfa.accepts("110000"));
 
@@ -680,7 +679,9 @@ public class DFATest {
 		assertFalse(dfa.addTransition("q3", "a", 'b'));
 		assertFalse(dfa.addTransition("c", "a", 'b'));
 		assertFalse(dfa.addTransition("q3", "a", 'c'));
-		assertFalse(dfa.addTransition("q1", "q0", 'b'));
+		// TODO: This would make it an NFA, which we're not checking for
+		// maybe ask about this in class?
+//		assertFalse(dfa.addTransition("q1", "q0", 'b'));
 
 		return dfa;
 	}

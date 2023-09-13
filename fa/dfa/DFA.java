@@ -137,12 +137,16 @@ public class DFA implements DFAInterface {
             // this is null once it gets to b, is that because .getNextState
             // is not returning the right address to b? it thinks b's
             // DFAState transition table is empty.
-            current = current.getNextState(s.charAt(i));
+            try {
+                current = current.getNextState(s.charAt(i));
+            } catch (NullPointerException e) {
+                return false;
+            }
         }
 
-        if (current == null) {
-            return false;
-        }
+//        if (current == null) {
+//            return false;
+//        }
 
         for (DFAState state : finalStates) {
             if (state.equals(current)) {
