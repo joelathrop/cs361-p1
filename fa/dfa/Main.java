@@ -11,6 +11,7 @@ public class Main {
         dfa.addState("a");
         dfa.addState("b");
         dfa.setStart("a");
+        dfa.setStart("b");
         dfa.setFinal("b");
 
         dfa.addTransition("a", "a", '0');
@@ -22,6 +23,7 @@ public class Main {
         dfa.accepts("1");
         dfa.accepts("101");
 
+        System.out.println("start = " + dfa.startState);
         System.out.println(dfa.toString());
     }
 }

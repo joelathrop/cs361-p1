@@ -46,7 +46,7 @@ public class DFAState extends State {
      * @return - following DFAState based on transition value
      */
     public DFAState getNextState(char symb) {
-        return transitionTable.get(symb);
+        return transitionTable.getOrDefault(symb, null);
     }
 
     @Override

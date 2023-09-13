@@ -85,7 +85,6 @@ public class DFA implements DFAInterface {
         return retVal;
     }
 
-    // TODO: Reset start state on next call
     @Override
     public boolean setStart(String name) {
         boolean retVal = false;
@@ -141,6 +140,10 @@ public class DFA implements DFAInterface {
             current = current.getNextState(s.charAt(i));
         }
 
+        if (current == null) {
+            return false;
+        }
+
         for (DFAState state : finalStates) {
             if (state.equals(current)) {
                 retVal = true;
@@ -184,8 +187,22 @@ public class DFA implements DFAInterface {
         boolean done = false;
         boolean dneFlagFromState = true;
         boolean dneFlagToState = true;
-        DFAState current = new DFAState(fromState);
-        DFAState to = new DFAState(toState);
+        DFAState current = new DFAState("");
+        DFAState to = new DFAState("");
+
+        // set from state
+        for (DFAState s : states) {
+            if (s.getName().equals(fromState)) {
+                current = s;
+            }
+        }
+
+        // set toState
+        for (DFAState s : states) {
+            if (s.getName().equals(toState)) {
+                to = s;
+            }
+        }
 
         // fromState check exist
         for (DFAState s : states) {

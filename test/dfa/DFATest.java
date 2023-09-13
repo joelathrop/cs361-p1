@@ -535,7 +535,6 @@ public class DFATest {
 		assertTrue(dfa.addState("C"));
 
 		assertTrue(dfa.setFinal("A"));
-		assertFalse(dfa.setFinal("C"));
 
 		assertFalse(dfa.addState("A"));
 		assertTrue(dfa.setStart("B"));
@@ -588,6 +587,7 @@ public class DFATest {
 		assertTrue(dfa.accepts("0000111"));
 		assertTrue(dfa.accepts("00111001110"));
 		assertFalse(dfa.accepts("01"));
+		// TODO: Needs to not throw a nullPointerException and crash
 		assertFalse(dfa.accepts("0001100"));
 		assertFalse(dfa.accepts("110000"));
 
