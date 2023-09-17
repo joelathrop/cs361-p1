@@ -918,6 +918,7 @@ public class DFATest {
 
 		assertTrue(dfa.addTransition("q0", "q1", 'b'));
 		assertTrue(dfa.addTransition("q0", "q0q2", 'a'));
+		assertTrue(dfa.addTransition("q1", "q2", 'b'));
 		assertTrue(dfa.addTransition("q0q2", "q0q2", 'a'));
 		assertTrue(dfa.addTransition("q0q2", "q0q1", 'c'));
 		assertTrue(dfa.addTransition("q0q2", "q1", 'b'));
