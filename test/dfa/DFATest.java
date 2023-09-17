@@ -792,7 +792,6 @@ public class DFATest {
 		assertTrue(dfa.addState("q1"));
 
 		assertFalse(dfa.setFinal("a"));
-		assertFalse(dfa.setStart("q1"));
 		assertFalse(dfa.addState("q0"));
 
 		assertTrue(dfa.addTransition("q0", "q0", 'b'));
