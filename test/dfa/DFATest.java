@@ -913,7 +913,7 @@ public class DFATest {
 		assertTrue(dfa.addState("q1q2"));
 		assertTrue(dfa.setFinal("q1q2"));
 
-		assertFalse(dfa.setFinal("0"));
+		assertFalse(dfa.setFinal("a"));
 		assertFalse(dfa.addState("q0q2"));
 
 		assertTrue(dfa.addTransition("q0", "q1", 'b'));
@@ -952,6 +952,7 @@ public class DFATest {
 		assertNotNull(dfa.getState("q0q2").getName(),"q0q2");
 		assertNotNull(dfa.getState("q0q1").getName(),"q0q1");
 		assertNotNull(dfa.getState("q1q2").getName(),"q1q2");
+
 		assertTrue(dfa.isFinal("q1q2"));
 		assertTrue(dfa.isFinal("q2"));
 		assertTrue(dfa.isFinal("q0q2"));
