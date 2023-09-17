@@ -961,7 +961,6 @@ public class DFATest {
 
 	@Test
 	public void test8_3() {
-		/* This machine should have no a's in it */
 		DFA dfa = dfa8();
 		assertFalse(dfa.accepts("aaccbc"));
 		assertTrue(dfa.accepts("aaa"));
@@ -1027,7 +1026,6 @@ public class DFATest {
 	public void test8_6() {
 		DFA dfa = dfa8();
 		DFA dfaSwap = dfa.swap('b', 'a');
-		/* This machine should have no b's */
 		assertFalse(dfa.accepts("bbccac"));
 		assertTrue(dfa.accepts("bbb"));
 		assertFalse(dfa.accepts("aac"));
