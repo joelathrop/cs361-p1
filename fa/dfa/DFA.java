@@ -10,16 +10,21 @@ import java.util.Set;
 public class DFA implements DFAInterface {
     /* 5-tuple instance variables */
     public LinkedHashSet<Character> sigma;
+    public LinkedHashSet<Character> copySigma;
 
     public LinkedHashSet<DFAState> states;
+    public LinkedHashSet<DFAState> copyStates;
     public LinkedHashSet<DFAState> finalStates;
+    public LinkedHashSet<DFAState> copyFinals;
     public LinkedHashSet<DFAState> transitions;
     public String startState;
+    public String copyStart;
     public String totalStates = "";
     public String alphabet = "";
 
-    // transition table
+    // transition tables
     public LinkedHashMap<DFAState, LinkedHashMap<Character, DFAState>> transitionTable;
+    public LinkedHashMap<DFAState, DFAState> copyMap;
 
     /**
      * Constructor for Deterministic Finite Automata (DFA)
@@ -28,7 +33,9 @@ public class DFA implements DFAInterface {
     public DFA() {
         startState = "";
         sigma = new LinkedHashSet<>();
+        copySigma = new LinkedHashSet<>();
         states = new LinkedHashSet<>();
+        copyStates = new LinkedHashSet<>();
         finalStates = new LinkedHashSet<>();
         transitions = new LinkedHashSet<>();
         transitionTable = new LinkedHashMap<>();
@@ -131,7 +138,7 @@ public class DFA implements DFAInterface {
         // loop through string
         for (int i = 0; i < s.length(); i++) {
             // check if in alphabet
-            if (!sigma.contains(s.charAt(i))) {
+            if (!sigma.contains(s.charAt(i)) && !copySigma.contains(s.charAt(i))) {
                 return false;
             }
             // this is null once it gets to b, is that because .getNextState
@@ -143,10 +150,6 @@ public class DFA implements DFAInterface {
                 return false;
             }
         }
-
-//        if (current == null) {
-//            return false;
-//        }
 
         for (DFAState state : finalStates) {
             if (state.equals(current)) {
@@ -252,7 +255,36 @@ public class DFA implements DFAInterface {
     /* TODO */
     @Override
     public DFA swap(char symb1, char symb2) {
-        return null;
+
+        // create a deep copy
+        DFA newDFA = new DFA();
+        LinkedHashMap<DFAState, DFAState> copyMap = new LinkedHashMap<>();
+        // add all states to the new DFA
+        for (DFAState oldState : states) {
+            DFAState newState = new DFAState(oldState.getName());
+            if (isFinal(oldState.getName())) {
+                newDFA.setFinal(oldState.getName());
+            }
+            newDFA.addState(newState.getName());
+            copyMap.put(oldState, newState);
+            if (isStart(oldState.getName())) {
+                newDFA.setStart(newState.getName());
+            }
+            copyStates.add(newState);
+        }
+
+        // add alphabet
+        // this becomes a problem if swap is called multiple times
+        newDFA.copySigma.addAll(sigma);
+
+        // iterate over all states in the new DFA and update transitions
+        for (DFAState state : copyStates) {
+            if (state.transitionTable.get(symb1) != null) {
+                state.updateTransition(symb1, symb2);
+            }
+        }
+
+        return newDFA;
     }
 
     //TODO: toString()
@@ -265,18 +297,19 @@ public class DFA implements DFAInterface {
 
                 // delta : transition table portion
                 + "delta =\n"
-                + "     " + alphabet + "\n";
-        ret += transitionTable.toString() + "\n";
+                + "     ";
+        for (char c : alphabet.toCharArray()) {
+            ret += c + " ";
+        }
+        ret += "\n";
+//        ret += transitionTable.toString() + "\n";
+        for (DFAState s : states) {
+            ret += s.transitionTable.toString();
+        }
 
-//        for (int i = 0; i < totalStates.length(); i++) {
-//            ret += totalStates.charAt(i) + " ";
-//            // go across the line with the transition states
-////            ret += transitionTable.get(alphabet) + " ";
-//            transitionTable.toString();
-//        }
 
         // q0 : start state portion
-        ret += "q0 = " + startState + "\n";
+        ret += "\nq0 = " + startState + "\n";
 
         // F : final states portion
         String fStates = "";

@@ -13,6 +13,8 @@ import java.util.LinkedHashMap;
 public class DFAState extends State {
 
     public LinkedHashMap<Character, DFAState> transitionTable;
+    // only used if swap is called
+    public LinkedHashMap<Character, DFAState> swapTable;
 
     /**
      * All concrete consturctors must
@@ -25,6 +27,7 @@ public class DFAState extends State {
     public DFAState(String name) {
         super(name);
         transitionTable = new LinkedHashMap<>();
+        swapTable = new LinkedHashMap<>();
     }
 
     /**
@@ -36,6 +39,22 @@ public class DFAState extends State {
      */
     public void addTransition(char value, DFAState toState) {
         transitionTable.put(value, toState);
+    }
+
+    /**
+     * updateTransition can switch keys and values in the map when
+     * the swap method is called in the DFA.java class
+     *
+     * @param old - old transition key
+     * @param swap - new transition key
+     */
+    public void updateTransition(char old, char swap) {
+        DFAState nextState = transitionTable.get(old);
+
+        if (nextState != null) {
+            transitionTable.remove(old);
+            transitionTable.put(swap, nextState);
+        }
     }
 
     /**
