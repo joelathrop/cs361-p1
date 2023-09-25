@@ -275,7 +275,10 @@ public class DFA implements DFAInterface {
 
         // add alphabet
         // this becomes a problem if swap is called multiple times
-        newDFA.copySigma.addAll(sigma);
+        newDFA.sigma.addAll(sigma);
+        // add final states
+        newDFA.finalStates.addAll(finalStates);
+//        newDFA.copySigma.addAll(sigma);
 
         // iterate over all states in the new DFA and update transitions
         for (DFAState state : copyStates) {
