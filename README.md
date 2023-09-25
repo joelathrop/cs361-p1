@@ -6,36 +6,38 @@
 
 ## Overview
 
-Concisely explain what the program does. If this exceeds a couple of
-sentences, you're going too far. Generally you should be pulling this
-right from the project specification. Please don't just cut and
-paste, but paraphrase what is stated in the project specification.
+This is a Java program that models a deterministic finite automaton. We implemented the DFA.java, 
+DFAState.java, and DFATest.java classes by using linked hash maps and linked hash sets to organize
+the DFA's language, states, and transitions.
 
 ## Reflection
 
-Write a brief (2-3 paragraph) reflection describing your experience with this
-project. Answer the following questions (but feel free to add other insights):
-- What worked well and what was a struggle?
-- What concepts still aren't quite clear?
-- What techniques did you use to make your code easy to debug and modify?
-- What would you change about your design process?
-- If you could go back in time, what would you tell yourself about doing this project?
+We began this project by creating a GitHub repository so we could work in an agile environment. Once we 
+had that set up we started with understanding the DFATest.java tests and drawing out each of the DFA 
+systems for the three given tests. We then added tests for transitions that lead to qerr, for a system 
+where the start state is the same as the final state, and for a system that has more than two symbols in 
+its alphabet. From there we began working on DFA.java and DFAState.java. 
+
+We struggled a bit with the accepts() method due to not fully understanding what a State includes in
+this project. Once we understood that a State is an object that holds a Hashmap within it that includes
+all its transitions we were able to figure out accepts(). We also struggled a bit with swap() because we
+haven't had to use the deep copying technique for a few semesters so we had to re-learn that aspect in 
+order to complete the method. Another method that caused us a bit of a stress was the toString() because
+all of the given tests had different spacing when creating the toString(). We learned that the whitespace 
+will be ignored when the program is tested.
+
+Overall, we really enjoyed this project because it aligns with what we've learned in class and it wasn't 
+too challenging to think about because we have been doing so much practice with DFA's. We ran into a few 
+issues but with lots of time and thought we were able to figure them out!
 
 ## Compiling and Using
 
-This section should tell the user how to compile your code.  It is
-also appropriate to instruct the user how to use your code. Does your
-program require user input? If so, what does your user need to know
-about it to use it as quickly as possible?
+To run the program, we will be directly running the test class. Run the following commands in the onyx terminal:
+
+- $javac *.java
+- $./DFATest.java
 
 ## Sources used
 
-If you used any sources outside of the lecture notes, class lab files,
-or text book you need to list them here. If you looked something up on
-stackoverflow.com and fail to cite it in this section it will be
-considered plagiarism and be dealt with accordingly. So be safe CITE!
-
-----------
-This README template is using Markdown. To preview your README output,
-you can copy your file contents to a Markdown editor/previewer such
-as [https://stackedit.io/editor](https://stackedit.io/editor).
+- Lecture notes, slides
+- 
