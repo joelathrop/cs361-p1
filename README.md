@@ -40,4 +40,5 @@ To run the program, we will be directly running the test class. Run the followin
 ## Sources used
 
 - Lecture notes, slides
-- 
+- Set documentation
+- Map documentation
