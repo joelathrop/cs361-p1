@@ -34,8 +34,7 @@ issues but with lots of time and thought we were able to figure them out!
 
 To run the program, we will be directly running the test class. Run the following commands in the onyx terminal:
 
-- $javac *.java
-- $./DFATest.java
+- $javac -d out/production.p1Files fa/dfa/*.java test/dfa/*.java
 
 ## Sources used
 
