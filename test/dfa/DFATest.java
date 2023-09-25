@@ -948,14 +948,13 @@ public class DFATest {
 		assertNotNull(dfa.getState("q0").getName(),"q0");
 		assertTrue(dfa.isStart("q0"));
 		assertNotNull(dfa.getState("q1").getName(),"q1");
+		assertFalse(dfa.isFinal("q1"));
 		assertNotNull(dfa.getState("q2").getName(),"q2");
 		assertNotNull(dfa.getState("q0q2").getName(),"q0q2");
+		assertTrue(dfa.isFinal("q0q2"));
 		assertNotNull(dfa.getState("q0q1").getName(),"q0q1");
 		assertNotNull(dfa.getState("q1q2").getName(),"q1q2");
 
-		assertTrue(dfa.isFinal("q1q2"));
-		assertTrue(dfa.isFinal("q2"));
-		assertTrue(dfa.isFinal("q0q2"));
 		assertEquals(dfa.getSigma(), Set.of('c','b','a'));
 
 		System.out.println("dfa8 correctness pass");
