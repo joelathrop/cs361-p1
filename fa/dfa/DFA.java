@@ -300,14 +300,13 @@ public class DFA implements DFAInterface {
 
                 // delta : transition table portion
                 + "delta =\n"
-                + "     ";
-        for (char c : alphabet.toCharArray()) {
-            ret += c + " ";
-        }
-        ret += "\n";
-//        ret += transitionTable.toString() + "\n";
+                + alphabet.toString() + "\n";
         for (DFAState s : states) {
-            ret += s.transitionTable.toString();
+            ret += s.getName();
+
+            for (Character c : alphabet.toCharArray()) {
+                ret += s.transitionTable.get(c).toString();
+            }
         }
 
 
