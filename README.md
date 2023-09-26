@@ -32,9 +32,14 @@ issues but with lots of time and thought we were able to figure them out!
 
 ## Compiling and Using
 
-To run the program, we will be directly running the test class. Run the following commands in the onyx terminal:
+To compile the program run the following command on the Onyx command line:
 
-- $javac -d out/production/p1Files fa/dfa/\*.java test/dfa/\*.java
+- $javac -d out/production/p1Files fa/dfa/\*.java  -cp .:/usr/share/java/junit.jar ./test/dfa/DFATest.java
+
+To run the program after compilation, type to following command on the Onyx command line:
+
+- $java -cp .:/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar org.junit.runner.JUnitCore test.dfa.DFATest
+
 
 ## Sources used
 
