@@ -54,9 +54,11 @@ public class DFA implements DFAInterface {
                     return false;
                 } else {
 //                    states.add(newState);
-                    transitions.add(new DFAState(name));
-                    totalStates += name + " ";
-                    retVal = true;
+                    if (!totalStates.contains(name)) {
+                        transitions.add(new DFAState(name));
+                        totalStates += name + " ";
+                        retVal = true;
+                    }
                 }
             }
         }
@@ -152,7 +154,7 @@ public class DFA implements DFAInterface {
         }
 
         for (DFAState state : finalStates) {
-            if (state.equals(current)) {
+            if (state.getName().equals(current.getName())) {
                 retVal = true;
                 break;
             }
@@ -270,6 +272,7 @@ public class DFA implements DFAInterface {
             if (isStart(oldState.getName())) {
                 newDFA.setStart(newState.getName());
             }
+            newDFA.states.add(newState);
             copyStates.add(newState);
         }
 
@@ -278,12 +281,28 @@ public class DFA implements DFAInterface {
         newDFA.sigma.addAll(sigma);
         // add final states
         newDFA.finalStates.addAll(finalStates);
-//        newDFA.copySigma.addAll(sigma);
 
-        // iterate over all states in the new DFA and update transitions
-        for (DFAState state : copyStates) {
-            if (state.transitionTable.get(symb1) != null) {
-                state.updateTransition(symb1, symb2);
+//         add existing transitions to newDFA
+        for (DFAState y : states) {
+            for (DFAState z : newDFA.states) {
+                if (y.getName().equals(z.getName())) {
+                    z.transitionTable.putAll(y.transitionTable);
+                }
+            }
+        }
+
+        // remove duplicates
+        // don't know how to do this or why there are duplicates
+//        for (DFAState i : newDFA.states) {
+//            i.transitionTable.remove(0);
+//            i.transitionTable.remove(2);
+//        }
+
+        for (DFAState state : newDFA.states) {
+            for (DFAState x : states) {
+                if (x.getName().equals(state.getName())) {
+                    state.updateTransition(symb1, symb2);
+                }
             }
         }
 
@@ -305,8 +324,11 @@ public class DFA implements DFAInterface {
             ret += s.getName();
 
             for (Character c : alphabet.toCharArray()) {
-                ret += s.transitionTable.get(c).toString();
+                if (!Character.isWhitespace(c)) {
+                    ret += s.transitionTable.get(c).getName() + "\t";
+                }
             }
+            ret += "\n";
         }
 
 
