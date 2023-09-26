@@ -10,6 +10,18 @@ This is a Java program that models a deterministic finite automaton. We implemen
 DFAState.java, and DFATest.java classes by using linked hash maps and linked hash sets to organize
 the DFA's language, states, and transitions.
 
+## Problems
+
+Overall we only ran into one big problem, which ended up being the swap() method.
+For some reason when we add the transitions to the new DFA in swap(), it creates
+duplicate values, and we're not sure how to remove these. Therefore, when calling
+accepts() on the new DFA with swapped transitions, it only finds the first two keys,
+which are duplicates. Otherwise, swap() almost works.
+
+Another slight hiccup was the toString(), which is not passing all tests in the test
+suite. However, it produces a valid synopsis string of the DFA, it just doesn't match
+all of the tabs and newlines in the tests. This is something Dr. Frost said was acceptable.
+
 ## Reflection
 
 We began this project by creating a GitHub repository so we could work in an agile environment. Once we 
