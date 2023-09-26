@@ -46,11 +46,11 @@ issues but with lots of time and thought we were able to figure them out!
 
 To compile the program run the following command on the Onyx command line:
 
-- $javac -cp .:/usr/share/java/junit.jar ./test/dfa/DFATest.java
+- $ javac -cp .:/usr/share/java/junit.jar ./test/dfa/DFATest.java
 
 To run the program after compilation, type to following command on the Onyx command line:
 
-- $java -cp .:/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar org.junit.runner.JUnitCore test.dfa.DFATest
+- $ java -cp .:/usr/share/java/junit.jar:/usr/share/java/hamcrest/core.jar org.junit.runner.JUnitCore test.dfa.DFATest
 
 
 ## Sources used
